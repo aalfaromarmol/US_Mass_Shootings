@@ -11,3 +11,10 @@ def load_data(csv):
 
 project = load_data('USMASS.csv')
 st.dataframe(project)
+
+# Load US Mass Shooting data and create a dataframe called mass
+mass_df = pd.read_csv(project)
+
+# Display the columns and their data types
+print('Columns and their types:')
+print(mass_df.dtypes)
