@@ -64,29 +64,6 @@ st.header('Map of US Mass Shootings (1983-2023)')
 map_data = project[['latitude', 'longitude']]
 # Filter out null values
 map_data = map_data.dropna(subset=['latitude', 'longitude'])
-
-# map layers
-layers=[
-    pdk.Layer(
-        'HexagonLayer',
-        data=map_data,
-        get_position='[longitude, latitude]',
-        radius=200,
-        elevation_scale=4,
-        elevation_range=[0, 1000],
-        pickable=True,
-        extruded=True,
-    ),
-    pdk.Layer(
-        'ScatterplotLayer',
-        data=map_data,
-        get_position='[longitude, latitude]',
-
-        get_color='[200, 30, 0, 160]',
-        get_radius=200,
-    ),
-]
-
 # Create PyDeck deck
 deck = pdk.Deck(layers=layers)
 view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
