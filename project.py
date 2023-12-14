@@ -94,6 +94,15 @@ st.map(map_data, use_container_width=True)
 file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
 data = pd.read_csv(file_path)
 
+
+data = pd.DataFrame({'year': [1983,1984,1985,1986,1987,1999,1989,1990,1991,1992,1993,1994,1995,1996,
+                              1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010, 2011, 2012, 2013],
+                     'injured': [1, 5, 10, 120]
+                     
+                     })
+# Create a range from min to max
+injured_range = range(min(injured), max(injured) + 1)
+
 # Create a scatter plot
 scatter_plot = alt.Chart(data).mark_circle(size=60).encode(
     x='year:Q',
