@@ -57,11 +57,13 @@ with open('style.css') as f:
 st.sidebar.header('Dashboard `US Mass Shooting ')
 
 # Set up Streamlit sidebar and header
-st.sidebar.header('Dashboard `US Mass Shooting')
+st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
 st.header('Map of US Mass Shootings (1983-2023)')
 
 # Select relevant columns for the map
 map_data = project[['latitude', 'longitude']]
+# Filter out null values
+map_data = map_data.dropna(subset=['latitude', 'longitude'])
 
 # Create PyDeck layer
 layer = pdk.Layer(
