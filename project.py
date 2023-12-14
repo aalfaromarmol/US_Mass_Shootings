@@ -49,8 +49,6 @@ mass= pd.read_csv('USMASS.csv')
 print('Columns and their types:')
 print(mass.dtypes)
 
-
-
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     
@@ -75,10 +73,6 @@ st.pydeck_chart(deck, initial_view_state=view_state)
 
 # Create Streamlit map
 st.map(map_data2, use_container_width=True)
-
-import pandas as pd
-import streamlit as st
-import altair as alt
 
 # scatter data
 file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
