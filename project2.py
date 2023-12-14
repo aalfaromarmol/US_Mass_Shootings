@@ -1,10 +1,8 @@
-import numpy as np
 import pandas as pd
-from geopy.geocoders import Nominatim
-from geopy.extra.rate_limiter import RateLimiter
 import streamlit as st
 import altair as alt
 import pydeck as pdk
+import plotly.express as px
 
 def load_data(csv):
     df = pd.read_csv(csv)
@@ -12,19 +10,17 @@ def load_data(csv):
 
 # Set page config
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
-st.header('Visualizations of US Mass Shootings Analysis (1983-2023)')
+st.header('Visualizations of US Mass shootings Analysis (1983-2023)')
 
-# Load US Mass Shooting data and create a dataframe called project
+# Load data
 file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
 project = load_data(file_path)
-
-# Display the dataframe in Streamlit
 st.dataframe(project)
 
 # Chart of US Mass shootings Analysis (1983-2023)
-st.header('US Mass Shootings Analysis (1983-2023)')
+st.header('US Mass shootings Analysis (1983-2023)')
 
-# Create a bar chart
+# Create a bar chart using Altair
 chart = alt.Chart(project).mark_bar().encode(
     x='year:O',
     y='fatalities:Q'
@@ -48,9 +44,10 @@ map_data2 = map_data.dropna(subset=['latitude', 'longitude'])
 
 # Create PyDeck deck
 deck = pdk.Deck(layers=[pdk.Layer(type='ScatterplotLayer', data=map_data2)])
+view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
 
 # Render PyDeck chart using st.pydeck_chart
-st.pydeck_chart(deck)
+st.pydeck_chart(deck, initial_view_state=view_state)
 
 # Create Streamlit map
 st.map(map_data2, use_container_width=True)
@@ -75,3 +72,20 @@ scatter_plot = alt.Chart(plot_data).mark_circle(
 
 # Display the Altair scatter plot in Streamlit
 st.altair_chart(scatter_plot)
+
+# Density data
+df = pd.read_csv("C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv")
+
+fig = px.scatter(
+    df.query('year'),  # Fixed query syntax
+    x="injuries",
+    y="year",
+    size="pop",
+    color="injuries",
+    hover_name="total_victims",
+    log_x=True,
+    size_max=60,
+)
+
+# Display Plotly figure using Streamlit
+st.plotly_chart(fig, use_container_width=True)

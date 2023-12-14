@@ -1,8 +1,8 @@
 import numpy as np
-import pandas as pd
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 import pandas as pd
+import plotly.express as px 
 import streamlit as st
 import altair as alt
 import pydeck as pdk
@@ -69,7 +69,7 @@ deck = pdk.Deck(layers=alt.layer)
 view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
 
 # Render PyDeck chart using st.pydeck_chart
-st.pydeck_chart(deck, initial_view_state=view_state)
+st.pydeck_chart(deck, initialview_state=view_state)
 
 # Create Streamlit map
 st.map(map_data2, use_container_width=True)
@@ -98,3 +98,29 @@ scatter_plot = alt.Chart(plot_data).mark_circle(
 
 # Display the Altair scatter plot in Streamlit
 st.altair_chart(scatter_plot)
+
+
+# density data
+
+df = pd.read_csv("C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv")
+
+fig = px.scatter(
+    df.query('year'),  # Add closing parenthesis here
+    x="injuries",
+    y="year",
+    size="pop",
+    color="injuries",
+    hover_name="total_victims",
+    log_x=True,
+    size_max=60,
+)
+
+
+tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
+with tab1:
+    # Use the Streamlit theme.
+    # This is the default. So you can also omit the theme argument.
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+with tab2:
+    # Use the native Plotly theme.
+    st.plotly_chart(fig, theme=None, use_container_width=True)
