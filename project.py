@@ -66,7 +66,7 @@ map_data = project[['latitude', 'longitude']]
 map_data = map_data.dropna(subset=['latitude', 'longitude'])
 
 # Create PyDeck deck
-deck = pdk.Deck(layers=layers)
+deck = pdk.Deck(layers=alt.layer)
 view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
 
 # Render PyDeck chart using st.pydeck_chart
