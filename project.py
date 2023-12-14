@@ -1,16 +1,18 @@
 import numpy as np
+import pandas as pd
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 import pandas as pd
-import pip
-import pandas as pd
-import time
 import streamlit as st
 import altair as alt
 import pydeck as pdk
 
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
 st.header('Visualizations of US Mass shootings Analysis (1983-2023)')
+
+#load data
+file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
+df = pd.read_csv(file_path)
 
 def load_data(csv):
     df = pd.read_csv(csv)
