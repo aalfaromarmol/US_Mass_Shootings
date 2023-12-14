@@ -64,6 +64,7 @@ st.header('Map of US Mass Shootings (1983-2023)')
 map_data = project[['latitude', 'longitude']]
 # Filter out null values
 map_data = map_data.dropna(subset=['latitude', 'longitude'])
+
 # Create PyDeck deck
 deck = pdk.Deck(layers=layers)
 view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
