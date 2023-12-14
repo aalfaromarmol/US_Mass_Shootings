@@ -65,27 +65,34 @@ map_data = project[['latitude', 'longitude']]
 # Filter out null values
 map_data = map_data.dropna(subset=['latitude', 'longitude'])
 
-# Create PyDeck layer
-layer = pdk.Layer(
-    'ScatterplotLayer',
-    data=map_data,
-    get_position='[longitude, latitude]',
-    get_radius=200,
-    get_fill_color='[255, 0, 0]',
-    pickable=True,
-)
+# map layers
+layers=[
+    pdk.Layer(
+        'HexagonLayer',
+        data=map_data,
+        get_position='[longitude, latitude]',
+        radius=200,
+        elevation_scale=4,
+        elevation_range=[0, 1000],
+        pickable=True,
+        extruded=True,
+    ),
+    pdk.Layer(
+        'ScatterplotLayer',
+        data=map_data,
+        get_position='[longitude, latitude]',
 
-# Set initial view state
-view_state = pdk.ViewState(
-    latitude=map_data['latitude'].mean(),
-    longitude=map_data['longitude'].mean(),
-    zoom=3,
-    pitch=0,
-)
+        get_color='[200, 30, 0, 160]',
+        get_radius=200,
+    ),
+]
 
 # Create PyDeck deck
+deck = pdk.Deck(layers=layers)
+view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
+
 # Render PyDeck chart using st.pydeck_chart
-st.pydeck_chart(pdk.Deck(layers=[layer], initial_view_state=view_state))
+st.pydeck_chart(deck, initial_view_state=view_state)
 
 # Create Streamlit map
 st.map(map_data, use_container_width=True)
@@ -101,14 +108,17 @@ data = pd.DataFrame({'year': [1983,1984,1985,1986,1987,1999,1989,1990,1991,1992,
                      
                      })
 # Create a range from min to max
-injured_range = range(min(injured), max(injured) + 1)
+injured_range = range(min('injured'), max('injured') + 1)
 
 # Create a scatter plot
-scatter_plot = alt.Chart(data).mark_circle(size=60).encode(
+scatter_plot = alt.Chart(data).mark_circle(
+    size=60, # controls the size of the circles
+    color='blue', # controls the color of the circles
+    opacity=0.5 # controls the transparency of the circles
+).encode(
     x='year:Q',
     y='injured:Q',
     tooltip=['year', 'injured']
 )
 
-# Display the scatter plot in Streamlit
 st.altair_chart(scatter_plot)
