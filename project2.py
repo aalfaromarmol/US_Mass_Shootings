@@ -45,7 +45,7 @@ map_data = project[['latitude', 'longitude']]
 map_data2 = map_data.dropna(subset=['latitude', 'longitude'])
 
 # Create Streamlit map
-st.map(map_data, use_container_width=True)
+st.map(map_data2, use_container_width=True)
 
 # Scatter data
 plot_data = pd.DataFrame({
