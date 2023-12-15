@@ -1,6 +1,9 @@
 import pandas as pd
 import streamlit as st
 import pydeck as pdk
+import altair as alt
+import numpy as np
+
 def load_data(csv):
     df = pd.read_csv(csv)
     return df
@@ -17,7 +20,6 @@ st.dataframe(project)
 
 # Chart of gunmen with prior signs of mental illness
 st.header('Gunmen with prior signs of mental illness vs. without prior signs of mental illness')
-
 
 # Filter out null, 'Unknown', 'TBD', and 'Unclear' values
 filtered_project = project[
