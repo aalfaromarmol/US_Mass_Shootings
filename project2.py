@@ -44,14 +44,6 @@ map_data = project[['latitude', 'longitude']]
 # Filter out null values
 map_data2 = map_data.dropna(subset=['latitude', 'longitude'])
 
-# Create PyDeck deck
-deck = pdk.Deck(layers=[pdk.Layer(type='ScatterplotLayer', data=map_data2)])
-
-view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
-
-# Render PyDeck chart using st.pydeck_chart
-st.pydeck_chart(deck, initialViewState=view_state) 
-
 # Create Streamlit map
 st.map(map_data, use_container_width=True)
 
