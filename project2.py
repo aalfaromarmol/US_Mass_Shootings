@@ -38,6 +38,9 @@ st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
 #map
 st.header('Map of US Mass Shootings (1983-2023)')
 
+# Select relevant columns for the map
+map_data = project[['latitude', 'longitude']]
+
 # Filter out null values
 map_data2 = map_data.dropna(subset=['latitude', 'longitude'])
 
