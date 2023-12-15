@@ -18,7 +18,7 @@ project = load_data(file_path)
 st.dataframe(project)
 
 # Chart of US Mass shootings Analysis (1983-2023)
-st.header('US Mass shootings Analysis (1983-2023)')
+st.header('Number of injured in US Mass shootings Analysis (1983-2023)')
 
 # Create a bar chart using Altair
 chart = alt.Chart(project).mark_bar().encode(
@@ -34,10 +34,9 @@ st.sidebar.header('Dashboard `US Mass Shooting ')
 
 # Set up Streamlit sidebar and header
 st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
-st.header('Map of US Mass Shootings (1983-2023)')
 
-# Select relevant columns for the map
-map_data = project[['latitude', 'longitude']]
+#map
+st.header('Map of US Mass Shootings (1983-2023)')
 
 # Filter out null values
 map_data2 = map_data.dropna(subset=['latitude', 'longitude'])
@@ -65,7 +64,7 @@ scatter_plot = alt.Chart(plot_data).mark_circle(
     color='blue',  # controls the color of the circles
     opacity=0.5  # controls the transparency of the circles
 ).encode(
-    x='year:Q',
+    x='year:O',
     y='injured:Q',
     tooltip=['year', 'injured']
 )
