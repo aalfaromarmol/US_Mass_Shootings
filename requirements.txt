@@ -1,56 +1,121 @@
-import streamlit as st 
-pandas as pd 
-import plost
-
-#st.sidebar.subheader('Heat map parameter')
-#time_hist_color = st.sidebar.selectbox('Color by', ('temp_min', 'temp_max')) 
-
-st.sidebar.subheader('Donut chart parameter')
-donut_theta = st.sidebar.selectbox('Select data', ('q2', 'q3'))
-
-st.sidebar.subheader('Line chart parameters')
-plot_data = st.sidebar.multiselect('Select data', ['temp_min', 'temp_max'], ['temp_min', 'temp_max'])
-plot_height = st.sidebar.slider('Specify plot height', 200, 500, 250)
-
-st.sidebar.markdown('''
----
-Created with ❤️ by [Angelica Alfaro]
-                    ''')
+import pandas as pd
+import streamlit as st
+import altair as alt
+import pydeck as pdk
+import plotly.express as px
 
 
-# Row A
-st.markdown('### Metrics')
-col1, col2, col3 = st.columns(3)
-col1.metric("Temperature", "70 °F", "1.2 °F")
-col2.metric("Wind", "9 mph", "-8%")
-col3.metric("Humidity", "86%", "4%")
+st.title('My first app')
 
-# Row B
-US_shooting = pd.read_csv(, =['date'])
-stocks = pd.read_csv('https://raw.githubusercontent.com/dataprofessor/data/master/stocks_toy.csv')
 
-c1, c2 = st.columns((7,3))
-with c1:
-    st.markdown('### Heatmap')
-    plost.time_hist(
-    data=seattle_weather,
-    date='date',
-    x_unit='week',
-    y_unit='day',
-    color=time_hist_color,
-    aggregate='median',
-    legend=None,
-    height=345,
-    use_container_width=True)
-with c2:
-    st.markdown('### Donut chart')
-    plost.donut_chart(
-        data=stocks,
-        theta=donut_theta,
-        color='company',
-        legend='bottom', 
-        use_container_width=True)
+def load_data(csv):
+    df = pd.read_csv(csv)
+    return df
 
-# Row C
-st.markdown('### Line chart')
-st.line_chart(seattle_weather, x = 'date', y = plot_data, height = plot_height)
+# Set page config
+st.set_page_config(layout='wide', initial_sidebar_state='expanded')
+st.header('US Mass shootings Analysis (1983-2023)')
+
+
+# Load data
+file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
+project = load_data(file_path)
+st.dataframe(project)
+
+# Chart of gunmen with prior signs of mental illness
+st.header('Gunmen with prior signs of mental illness vs. without prior signs of mental illness')
+
+
+# Filter out null, 'Unknown', 'TBD', and 'Unclear' values
+filtered_project = project[
+    project['prior_signs_mental_health_issues'].notna() & 
+    (project['prior_signs_mental_health_issues'] != 'Unknown') &
+    (project['prior_signs_mental_health_issues'] != 'TBD') &
+    (project['prior_signs_mental_health_issues'] != 'Unclear')
+]
+
+# Create a bar chart using Altair
+chart2 = alt.Chart(filtered_project).mark_bar().encode(
+    alt.X('prior_signs_mental_health_issues:N', title='Mental Health Issues'),
+    alt.Y('count()', title='Number of Incidents'),
+    alt.Color('prior_signs_mental_health_issues:N', legend=None)
+)
+
+# Display the chart in Streamlit
+st.altair_chart(chart2)
+
+
+# Chart of US Mass shootings Analysis (1983-2023)
+st.header('Number of fatalities in US Mass shootings Analysis (1983-2023)')
+
+# Create a bar chart
+chart1 = alt.Chart(project).mark_bar().encode(
+    x='year:O',
+    y='fatalities:Q'
+)
+
+# Display the chart in Streamlit
+st.altair_chart(chart1)
+
+
+# Signs of Mental Illness
+
+
+# Map
+st.header('Map of US Mass Shootings (1983-2023)')
+
+# Select relevant columns for the map
+map_data = project[['latitude', 'longitude']]
+
+# Filter out null values
+map_data2 = map_data.dropna(subset=['latitude', 'longitude'])
+
+# Create Streamlit map
+st.map(map_data2, use_container_width=True)
+
+# Chart of US Mass shootings Analysis (1983-2023)
+st.header('Number of injured in US Mass shootings Analysis (1983-2023)')
+
+# Scatter data
+plot_data = pd.DataFrame({
+    'year': [1983, 1984, 1985, 1986, 1987, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
+             1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013],
+    'injured': [1, 5, 10, 120, 30, 50, 15, 75, 90, 80, 60, 40, 20, 45, 70, 110, 25, 55, 85, 100, 65, 95,
+                 35, 115, 130, 150, 140, 125, 135, 145]
+})
+
+# Create a scatter plot using Altair
+scatter_plot = alt.Chart(plot_data).mark_circle(
+    size=60,  # controls the size of the circles
+    color='blue',  # controls the color of the circles
+    opacity=0.5  # controls the transparency of the circles
+).encode(
+    x='year:O',
+    y='injured:Q',
+    tooltip=['year', 'injured']
+)
+
+# Display the Altair scatter plot in Streamlit
+st.altair_chart(scatter_plot)
+
+# Define a list of charts
+charts = ['Select...', 'Number of fatalities in US Mass shootings Analysis (1983-2023)',
+          'Gunmen with prior signs of mental illness vs. without prior signs of mental illness',
+          'Number of injured in US Mass shootings Analysis (1983-2023)']
+
+
+# Create a dropdown menu for selecting a chart
+selected_chart = st.selectbox('Select a chart', charts)
+
+# Display the selected chart
+if selected_chart == 'Number of fatalities in US Mass shootings Analysis (1983-2023)':
+    # Display the first chart
+    st.altair_chart(chart1)
+elif selected_chart == 'Gunmen with prior signs of mental illness vs. without prior signs of mental illness':
+    # Display the second chart
+    st.altair_chart(chart2)
+elif selected_chart == 'Number of injured in US Mass shootings Analysis (1983-2023)':
+    # Display the third chart
+    st.altair_chart(scatter_plot)
+# Sidebar
+st.sidebar.header('Exploring the relationship between mental illness and US Mass Shootings ', selected_chart)
