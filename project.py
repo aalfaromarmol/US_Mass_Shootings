@@ -14,7 +14,7 @@ st.header('US Mass shootings Analysis (1983-2023)')
 
 
 # Load data
-file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
+file_path = "USMASS.csv"
 project = load_data(file_path)
 st.dataframe(project)
 
