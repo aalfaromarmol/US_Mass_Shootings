@@ -15,6 +15,25 @@ st.header('Visualizations of US Mass shootings Analysis (1983-2023)')
 # Sidebar
 st.sidebar.header('Dashboard US Mass Shooting ')
 
+# Define a list of charts
+charts = ['Number of fatalities in US Mass shootings Analysis (1983-2023)',
+          'Gunmen with prior signs of mental illness vs. without prior signs of mental illnesst',
+          'Number of injured in US Mass shootings Analysis (1983-2023)']
+
+# Create a dropdown menu for selecting a chart
+selected_chart = st.selectbox('Select a chart', charts)
+
+# Display the selected chart
+if selected_chart == 'Number of fatalities in US Mass shootings Analysis (1983-2023)':
+    # Display scatter plot
+    st.altair_chart(chart1)
+elif selected_chart == 'Gunmen with prior signs of mental illness vs. without prior signs of mental illness':
+    # Display bar chart
+    st.altair_chart(chart2)
+elif selected_chart == 'Number of injured in US Mass shootings Analysis (1983-2023)':
+    # Display line chart
+    st.altair_chart(scatter_plot)
+
 # Load data
 file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
 project = load_data(file_path)
@@ -32,9 +51,6 @@ chart1 = alt.Chart(project).mark_bar().encode(
 # Display the chart in Streamlit
 st.altair_chart(chart1)
 
-
-# Set up Streamlit sidebar and header
-st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
 
 # Signs of Mental Illness
 
