@@ -20,21 +20,6 @@ file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/
 project = load_data(file_path)
 st.dataframe(project)
 
-# Chart of US Mass shootings Analysis (1983-2023)
-st.header('Number of fatalities in US Mass shootings Analysis (1983-2023)')
-
-# Create a bar chart
-chart1 = alt.Chart(project).mark_bar().encode(
-    x='year:O',
-    y='fatalities:Q'
-)
-
-# Display the chart in Streamlit
-st.altair_chart(chart1)
-
-
-# Signs of Mental Illness
-
 # Chart of gunmen with prior signs of mental illness
 st.header('Gunmen with prior signs of mental illness vs. without prior signs of mental illness')
 
@@ -50,11 +35,29 @@ filtered_project = project[
 # Create a bar chart using Altair
 chart2 = alt.Chart(filtered_project).mark_bar().encode(
     alt.X('prior_signs_mental_health_issues:N', title='Mental Health Issues'),
-    alt.Y('count()', title='Count')
+    alt.Y('count()', title='Number of Incidents'),
+    alt.Color('prior_signs_mental_health_issues:N', legend=None)
 )
 
 # Display the chart in Streamlit
 st.altair_chart(chart2)
+
+
+# Chart of US Mass shootings Analysis (1983-2023)
+st.header('Number of fatalities in US Mass shootings Analysis (1983-2023)')
+
+# Create a bar chart
+chart1 = alt.Chart(project).mark_bar().encode(
+    x='year:O',
+    y='fatalities:Q'
+)
+
+# Display the chart in Streamlit
+st.altair_chart(chart1)
+
+
+# Signs of Mental Illness
+
 
 # Map
 st.header('Map of US Mass Shootings (1983-2023)')
