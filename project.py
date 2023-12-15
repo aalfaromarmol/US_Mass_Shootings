@@ -71,14 +71,6 @@ st.map(map_data2, use_container_width=True)
 # Chart of US Mass shootings Analysis (1983-2023)
 st.header('Number of injured in US Mass shootings Analysis (1983-2023)')
 
-# Sidebar for user input
-st.sidebar.header("Pick a State")
-z_val = st.sidebar.selectbox("Pick Year", project.select_dtypes(include=np.number).columns.tolist())
-count_input = st.sidebar.number_input(f"Enter a value for the number of top {z_val} values to display", min_value=1, max_value=len(project), value=40, step=1)
-
-# Get the top values based on the specified column
-top_values = project.sort_values(by=z_val, ascending=False).head(count_input)
-
 # Scatter data
 plot_data = pd.DataFrame({
     'year': [1983, 1984, 1985, 1986, 1987, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
