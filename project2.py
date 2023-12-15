@@ -18,13 +18,7 @@ project = load_data(file_path)
 st.dataframe(project)
 
 # Chart of US Mass shootings Analysis (1983-2023)
-st.header('Number of injured in US Mass shootings Analysis (1983-2023)')
-
-# Create a bar chart using Altair
-chart = alt.Chart(project).mark_bar().encode(
-    x='year:O',
-    y='fatalities:Q'
-)
+st.header('Number of fatalities in US Mass shootings Analysis (1983-2023)')
 
 # Display the chart in Streamlit
 st.altair_chart(chart)
@@ -35,6 +29,25 @@ st.sidebar.header('Dashboard `US Mass Shooting ')
 # Set up Streamlit sidebar and header
 st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
 
+# Create a bar chart using Altair
+chart = alt.Chart(project).mark_bar().encode(
+    x='year:O',
+    y='fatalities:Q'
+)
+# Signs of Mental Illness
+
+# Chart of gunmen with prior signs of mental illness
+st.header('Gunmen with prior signs of mental illness vs. without prior signs of mental illness')
+
+# Display the chart in Streamlit
+st.altair_chart(chart)
+
+
+# Create a bar chart using Altair
+chart = alt.Chart(project).mark_bar().encode(
+    alt.X('prior_signs_mental_health_issues:N', title='Mental Health Issues'),
+    alt.Y('count()', title='Count')
+)
 # Map
 st.header('Map of US Mass Shootings (1983-2023)')
 
@@ -47,11 +60,15 @@ map_data2 = map_data.dropna(subset=['latitude', 'longitude'])
 # Create Streamlit map
 st.map(map_data2, use_container_width=True)
 
+# Chart of US Mass shootings Analysis (1983-2023)
+st.header('Number of injured in US Mass shootings Analysis (1983-2023)')
+
 # Scatter data
 plot_data = pd.DataFrame({
     'year': [1983, 1984, 1985, 1986, 1987, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
              1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013],
-    'injured': [1, 5, 10, 120, 30, 50, 15, 75, 90, 80, 60, 40, 20, 45, 70, 110, 25, 55, 85, 100, 65, 95, 35, 115, 130, 150, 140, 125, 135, 145]
+    'injured': [1, 5, 10, 120, 30, 50, 15, 75, 90, 80, 60, 40, 20, 45, 70, 110, 25, 55, 85, 100, 65, 95,
+                 35, 115, 130, 150, 140, 125, 135, 145]
 })
 
 # Create a scatter plot using Altair
@@ -68,12 +85,14 @@ scatter_plot = alt.Chart(plot_data).mark_circle(
 # Display the Altair scatter plot in Streamlit
 st.altair_chart(scatter_plot)
 
+# Chart of US Mass shootings Analysis (1983-2023)
+st.header('Number of injured in US Mass shootings Analysis (1983-2023)')
 # Density data
 df = pd.read_csv("C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv")
 
 fig = px.scatter(
     df.query('year'),  # Fixed query syntax
-    x="injuries",
+    x="victims",
     y="year",
     size="pop",
     color="injuries",
