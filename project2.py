@@ -35,7 +35,7 @@ st.sidebar.header('Dashboard `US Mass Shooting ')
 # Set up Streamlit sidebar and header
 st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
 
-#map
+##map
 st.header('Map of US Mass Shootings (1983-2023)')
 
 # Select relevant columns for the map
@@ -50,10 +50,10 @@ deck = pdk.Deck(layers=[pdk.Layer(type='ScatterplotLayer', data=map_data2)])
 view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=4, pitch=50)
 
 # Render PyDeck chart using st.pydeck_chart
-st.pydeck_chart(deck, initialViewState=view_state) 
+st.pydeck_chart(deck, initial_view_State=view_state) 
 
 # Create Streamlit map
-st.map(map_data2, use_container_width=True)
+st.map(map_data, use_container_width=True)
 
 # Scatter data
 plot_data = pd.DataFrame({
