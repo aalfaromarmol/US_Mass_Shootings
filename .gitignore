@@ -1,0 +1,25 @@
+# .gitignore
+
+# Ignore environment variables
+.env
+
+# Ignore any .json files (like secrets.json)
+*.json
+
+# Ignore any .key files (like private.key)
+*.key
+
+# Ignore any .pem files (like private.pem)
+*.pem
+
+# Ignore any .cert files (like certificate.cert)
+*.cert
+
+# Ignore any .log files
+*.log
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore Python virtualenv
+venv/

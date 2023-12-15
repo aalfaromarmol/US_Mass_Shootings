@@ -1,12 +1,6 @@
 import pandas as pd
 import streamlit as st
-import numpy as np
-from geopy.geocoders import Nominatim
-from geopy.extra.rate_limiter import RateLimiter
-import altair as alt
 import pydeck as pdk
-import plotly.express as px
-
 def load_data(csv):
     df = pd.read_csv(csv)
     return df
