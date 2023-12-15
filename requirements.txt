@@ -1,5 +1,5 @@
-streamlit
 pandas
+streamlit
+pydeck
 altair
 numpy
-pydeck
