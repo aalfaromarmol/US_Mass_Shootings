@@ -4,8 +4,6 @@ import altair as alt
 import pydeck as pdk
 import plotly.express as px
 
-
-
 def load_data(csv):
     df = pd.read_csv(csv)
     return df
