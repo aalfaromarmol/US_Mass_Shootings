@@ -42,8 +42,12 @@ st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
 st.header('Gunmen with prior signs of mental illness vs. without prior signs of mental illness')
 
 
+# Filter out null and 'Unknown' values
+filtered_project = project[project['prior_signs_mental_health_issues'].notna() & 
+                           (project['prior_signs_mental_health_issues'] != 'Unknown')]
+
 # Create a bar chart using Altair
-chart2 = alt.Chart(project).mark_bar().encode(
+chart2 = alt.Chart(filtered_project).mark_bar().encode(
     alt.X('prior_signs_mental_health_issues:N', title='Mental Health Issues'),
     alt.Y('count()', title='Count')
 )
