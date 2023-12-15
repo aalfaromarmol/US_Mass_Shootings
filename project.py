@@ -14,8 +14,6 @@ def load_data(csv):
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
 st.header('Visualizations of US Mass shootings Analysis (1983-2023)')
 
-# Sidebar
-st.sidebar.header('Dashboard US Mass Shooting ')
 
 # Load data
 file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
@@ -101,7 +99,6 @@ charts = ['Select...', 'Number of fatalities in US Mass shootings Analysis (1983
           'Number of injured in US Mass shootings Analysis (1983-2023)']
 
 
-
 # Create a dropdown menu for selecting a chart
 selected_chart = st.selectbox('Select a chart', charts)
 
@@ -115,3 +112,5 @@ elif selected_chart == 'Gunmen with prior signs of mental illness vs. without pr
 elif selected_chart == 'Number of injured in US Mass shootings Analysis (1983-2023)':
     # Display the third chart
     st.altair_chart(scatter_plot)
+# Sidebar
+st.sidebar.header('Dashboard US Mass Shooting ', selected_chart)
