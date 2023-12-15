@@ -18,4 +18,4 @@ The app means to raise awareness and focus on mental health stigma.
 ## Streamlit App
 
 
-
+https://analytics-of-us-mass-shootings-1983-2023.streamlit.app/
