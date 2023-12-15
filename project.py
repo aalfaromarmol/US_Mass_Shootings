@@ -33,11 +33,6 @@ st.dataframe(project)
 # Load US Mass Shooting data and create a dataframe called mass
 mass= pd.read_csv("C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv")
 
-# Create a bar chart
-chart = alt.Chart(mass).mark_bar().encode(
-    x='year:O',
-    y='fatalities:Q'
-)
 
 # Display the chart in Streamlit
 st.altair_chart(chart)

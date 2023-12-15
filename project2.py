@@ -12,6 +12,9 @@ def load_data(csv):
 st.set_page_config(layout='wide', initial_sidebar_state='expanded')
 st.header('Visualizations of US Mass shootings Analysis (1983-2023)')
 
+# Sidebar
+st.sidebar.header('Dashboard US Mass Shooting ')
+
 # Load data
 file_path = "C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv"
 project = load_data(file_path)
@@ -20,34 +23,34 @@ st.dataframe(project)
 # Chart of US Mass shootings Analysis (1983-2023)
 st.header('Number of fatalities in US Mass shootings Analysis (1983-2023)')
 
-# Display the chart in Streamlit
-st.altair_chart(chart)
+# Create a bar chart
+chart1 = alt.Chart(project).mark_bar().encode(
+    x='year:O',
+    y='fatalities:Q'
+)
 
-# Sidebar
-st.sidebar.header('Dashboard `US Mass Shooting ')
+# Display the chart in Streamlit
+st.altair_chart(chart1)
+
 
 # Set up Streamlit sidebar and header
 st.sidebar.header('Analysis of US Mass Shootings (1983-2023)')
 
-# Create a bar chart using Altair
-chart = alt.Chart(project).mark_bar().encode(
-    x='year:O',
-    y='fatalities:Q'
-)
 # Signs of Mental Illness
 
 # Chart of gunmen with prior signs of mental illness
 st.header('Gunmen with prior signs of mental illness vs. without prior signs of mental illness')
 
-# Display the chart in Streamlit
-st.altair_chart(chart)
-
 
 # Create a bar chart using Altair
-chart = alt.Chart(project).mark_bar().encode(
+chart2 = alt.Chart(project).mark_bar().encode(
     alt.X('prior_signs_mental_health_issues:N', title='Mental Health Issues'),
     alt.Y('count()', title='Count')
 )
+
+# Display the chart in Streamlit
+st.altair_chart(chart2)
+
 # Map
 st.header('Map of US Mass Shootings (1983-2023)')
 
@@ -84,22 +87,3 @@ scatter_plot = alt.Chart(plot_data).mark_circle(
 
 # Display the Altair scatter plot in Streamlit
 st.altair_chart(scatter_plot)
-
-# Chart of US Mass shootings Analysis (1983-2023)
-st.header('Number of injured in US Mass shootings Analysis (1983-2023)')
-# Density data
-df = pd.read_csv("C:/Users/gram/OneDrive/Documents/5122/5122 FINAL/US_Mass_Shootings/USMASS.csv")
-
-fig = px.scatter(
-    df.query('year'),  # Fixed query syntax
-    x="victims",
-    y="year",
-    size="pop",
-    color="injuries",
-    hover_name="total_victims",
-    log_x=True,
-    size_max=60,
-)
-
-# Display Plotly figure using Streamlit
-st.plotly_chart(fig, use_container_width=True)
