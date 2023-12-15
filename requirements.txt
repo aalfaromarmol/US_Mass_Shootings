@@ -1,1 +1,5 @@
-pip install -r requirements.txt
+streamlit
+pandas
+altair
+numpy
+pydeck
